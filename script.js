@@ -149,6 +149,20 @@ function rotateTetromino() {
     }
 }
 
+// ホールド処理の開始
+function startHold(direction) {
+    moveTetromino(direction); // 最初の移動
+    holdInterval = setInterval(() => {
+        moveTetromino(direction); // 指定した方向に連続で移動
+        draw();
+    }, 100); // 100ミリ秒ごとに移動
+}
+
+// ホールド処理の停止
+function stopHold() {
+    clearInterval(holdInterval);
+}
+
 // キーボード入力を処理
 document.addEventListener('keydown', (event) => {
     switch (event.key) {
@@ -169,56 +183,41 @@ document.addEventListener('keydown', (event) => {
 });
 
 // ボタンクリックイベントを処理
-document.getElementById('left-btn').addEventListener('click', () => {
-    moveTetromino('left');
-    draw();
-});
+document.getElementById('left-btn').addEventListener('mousedown', () => startHold('left'));
+document.getElementById('left-btn').addEventListener('mouseup', stopHold);
+document.getElementById('left-btn').addEventListener('mouseleave', stopHold);
 
-document.getElementById('right-btn').addEventListener('click', () => {
-    moveTetromino('right');
-    draw();
-});
+document.getElementById('right-btn').addEventListener('mousedown', () => startHold('right'));
+document.getElementById('right-btn').addEventListener('mouseup', stopHold);
+document.getElementById('right-btn').addEventListener('mouseleave', stopHold);
 
-document.getElementById('down-btn').addEventListener('click', () => {
-    moveTetromino('down');
-    draw();
-});
+document.getElementById('down-btn').addEventListener('mousedown', () => startHold('down'));
+document.getElementById('down-btn').addEventListener('mouseup', stopHold);
+document.getElementById('down-btn').addEventListener('mouseleave', stopHold);
 
 document.getElementById('rotate-btn').addEventListener('click', () => {
     rotateTetromino();
     draw();
 });
 
-// ボタンクリックを長押しできるようにする
-document.getElementById('left-btn').addEventListener('mousedown', () => startHold('left'));
-document.getElementById('right-btn').addEventListener('mousedown', () => startHold('right'));
-document.getElementById('down-btn').addEventListener('mousedown', () => startHold('down'));
-document.getElementById('rotate-btn').addEventListener('mousedown', rotateTetromino);
-
-document.querySelectorAll('button').forEach(button => {
-    button.addEventListener('mouseup', stopHold);
-    button.addEventListener('mouseleave', stopHold); // ボタンから離れたときにも停止
+// タッチイベントを処理（スマホ対応）
+document.getElementById('left-btn').addEventListener('touchstart', (event) => {
+    event.preventDefault(); // スクロールを防止
+    startHold('left');
 });
+document.getElementById('left-btn').addEventListener('touchend', stopHold);
 
-// タッチデバイス向けのイベント
-document.getElementById('left-btn').addEventListener('touchstart', () => startHold('left'));
-document.getElementById('right-btn').addEventListener('touchstart', () => startHold('right'));
-document.getElementById('down-btn').addEventListener('touchstart', () => startHold('down'));
+document.getElementById('right-btn').addEventListener('touchstart', (event) => {
+    event.preventDefault(); // スクロールを防止
+    startHold('right');
+});
+document.getElementById('right-btn').addEventListener('touchend', stopHold);
 
-// ホールド開始の処理
-function startHold(direction) {
-    moveTetromino(direction);
-    draw();
-    holdInterval = setInterval(() => {
-        moveTetromino(direction);
-        draw();
-    }, 100); // 100ミリ秒ごとに動かす
-}
-
-// ホールド停止の処理
-function stopHold() {
-    clearInterval(holdInterval);
-}
+document.getElementById('down-btn').addEventListener('touchstart', (event) => {
+    event.preventDefault(); // スクロールを防止
+    startHold('down');
+});
+document.getElementById('down-btn').addEventListener('touchend', stopHold);
 
 // ゲームの初期化
 function init() {
