@@ -21,6 +21,7 @@ const TETROMINOS = [
 
 let currentTetromino;
 let currentPosition;
+let holdInterval;
 
 // テトリスの描画
 function draw() {
@@ -188,6 +189,37 @@ document.getElementById('rotate-btn').addEventListener('click', () => {
     draw();
 });
 
+// ボタンクリックを長押しできるようにする
+document.getElementById('left-btn').addEventListener('mousedown', () => startHold('left'));
+document.getElementById('right-btn').addEventListener('mousedown', () => startHold('right'));
+document.getElementById('down-btn').addEventListener('mousedown', () => startHold('down'));
+document.getElementById('rotate-btn').addEventListener('mousedown', rotateTetromino);
+
+document.querySelectorAll('button').forEach(button => {
+    button.addEventListener('mouseup', stopHold);
+    button.addEventListener('mouseleave', stopHold); // ボタンから離れたときにも停止
+});
+
+// タッチデバイス向けのイベント
+document.getElementById('left-btn').addEventListener('touchstart', () => startHold('left'));
+document.getElementById('right-btn').addEventListener('touchstart', () => startHold('right'));
+document.getElementById('down-btn').addEventListener('touchstart', () => startHold('down'));
+
+// ホールド開始の処理
+function startHold(direction) {
+    moveTetromino(direction);
+    draw();
+    holdInterval = setInterval(() => {
+        moveTetromino(direction);
+        draw();
+    }, 100); // 100ミリ秒ごとに動かす
+}
+
+// ホールド停止の処理
+function stopHold() {
+    clearInterval(holdInterval);
+}
+
 // ゲームの初期化
 function init() {
     newTetromino();
@@ -204,4 +236,3 @@ function gameLoop() {
 // ゲームを開始する
 init();
 gameLoop();
-
