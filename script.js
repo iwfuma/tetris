@@ -3,7 +3,7 @@ const context = canvas.getContext('2d');
 
 const ROWS = 15; 
 const COLS = 10;
-const BLOCK_SIZE = 30;
+const BLOCK_SIZE = 20;
 
 // テトリスのフィールド
 let field = Array.from({ length: ROWS }, () => Array(COLS).fill(0));
