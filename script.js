@@ -132,13 +132,22 @@ function fixTetromino() {
 
 // 完全な行を削除する関数
 function removeFullRows() {
+    let rowsToRemove = [];
+
+    // 完全な行をリストに追加
     for (let r = ROWS - 1; r >= 0; r--) {
         if (field[r].every(cell => cell !== 0)) {
-            field.splice(r, 1);
-            field.unshift(Array(COLS).fill(0));
+            rowsToRemove.push(r);
         }
     }
+
+    // 完全な行を一気に削除
+    rowsToRemove.forEach(rowIndex => {
+        field.splice(rowIndex, 1); // 該当する行を削除
+        field.unshift(Array(COLS).fill(0)); // 上に新しい空行を追加
+    });
 }
+
 
 // テトリスのブロックを回転する関数
 function rotateTetromino() {
