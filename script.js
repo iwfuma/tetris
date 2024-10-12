@@ -8,16 +8,17 @@ const BLOCK_SIZE = 30;
 // テトリスのフィールド
 let field = Array.from({ length: ROWS }, () => Array(COLS).fill(0));
 
-// テトリスのブロックの定義
+// テトリスのブロックの定義と色
 const TETROMINOS = [
-    [[1, 1, 1, 1]], // I
-    [[1, 1], [1, 1]], // O
-    [[0, 1, 0], [1, 1, 1]], // T
-    [[1, 0, 0], [1, 1, 1]], // L
-    [[0, 0, 1], [1, 1, 1]], // J
-    [[1, 1, 0], [0, 1, 1]], // S
-    [[0, 1, 1], [1, 1, 0]], // Z
+    { shape: [[1, 1, 1, 1]], color: 'cyan' },      // I
+    { shape: [[1, 1], [1, 1]], color: 'yellow' },  // O
+    { shape: [[0, 1, 0], [1, 1, 1]], color: 'purple' }, // T
+    { shape: [[1, 0, 0], [1, 1, 1]], color: 'orange' }, // L
+    { shape: [[0, 0, 1], [1, 1, 1]], color: 'blue' },   // J
+    { shape: [[1, 1, 0], [0, 1, 1]], color: 'green' },  // S
+    { shape: [[0, 1, 1], [1, 1, 0]], color: 'red' },    // Z
 ];
+
 
 let currentTetromino;
 let currentPosition;
@@ -35,7 +36,7 @@ function drawField() {
     for (let r = 0; r < ROWS; r++) {
         for (let c = 0; c < COLS; c++) {
             if (field[r][c] !== 0) {
-                context.fillStyle = 'blue';
+                context.fillStyle = field[r][c]; // 色を使用して描画
                 context.fillRect(c * BLOCK_SIZE, r * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
                 context.strokeRect(c * BLOCK_SIZE, r * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
             }
@@ -43,12 +44,13 @@ function drawField() {
     }
 }
 
+
 // テトリスのブロックを描画
 function drawTetromino() {
     currentTetromino.shape.forEach((row, r) => {
         row.forEach((value, c) => {
             if (value !== 0) {
-                context.fillStyle = 'red';
+                context.fillStyle = currentTetromino.color; // テトリミノの色を使用
                 context.fillRect((currentPosition.x + c) * BLOCK_SIZE, (currentPosition.y + r) * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
                 context.strokeRect((currentPosition.x + c) * BLOCK_SIZE, (currentPosition.y + r) * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
             }
@@ -56,11 +58,13 @@ function drawTetromino() {
     });
 }
 
+
 // 新しいテトリスのブロックを生成
 function newTetromino() {
     const index = Math.floor(Math.random() * TETROMINOS.length);
     currentTetromino = {
-        shape: TETROMINOS[index],
+        shape: TETROMINOS[index].shape,
+        color: TETROMINOS[index].color, // テトリミノごとの色を設定
     };
     currentPosition = { x: Math.floor(COLS / 2) - Math.floor(currentTetromino.shape[0].length / 2), y: 0 };
 
@@ -70,6 +74,7 @@ function newTetromino() {
         init(); // 新しいゲームを開始
     }
 }
+
 
 // 移動できるかチェック
 function isValidMove(offsetX, offsetY, shape) {
@@ -123,12 +128,13 @@ function fixTetromino() {
                 const x = currentPosition.x + c;
                 const y = currentPosition.y + r;
                 if (y >= 0) {
-                    field[y][x] = value;
+                    field[y][x] = currentTetromino.color; // 色をフィールドに保存
                 }
             }
         });
     });
 }
+
 
 // 完全な行を削除する関数
 function removeFullRows() {
@@ -214,19 +220,35 @@ document.getElementById('left-btn').addEventListener('touchstart', (event) => {
     event.preventDefault(); // スクロールを防止
     startHold('left');
 });
-document.getElementById('left-btn').addEventListener('touchend', stopHold);
+document.getElementById('left-btn').addEventListener('touchend', (event) => {
+    event.preventDefault(); // スクロールを防止
+    stopHold();
+});
 
 document.getElementById('right-btn').addEventListener('touchstart', (event) => {
     event.preventDefault(); // スクロールを防止
     startHold('right');
 });
-document.getElementById('right-btn').addEventListener('touchend', stopHold);
+document.getElementById('right-btn').addEventListener('touchend', (event) => {
+    event.preventDefault(); // スクロールを防止
+    stopHold();
+});
 
 document.getElementById('down-btn').addEventListener('touchstart', (event) => {
     event.preventDefault(); // スクロールを防止
     startHold('down');
 });
-document.getElementById('down-btn').addEventListener('touchend', stopHold);
+document.getElementById('down-btn').addEventListener('touchend', (event) => {
+    event.preventDefault(); // スクロールを防止
+    stopHold();
+});
+
+document.getElementById('rotate-btn').addEventListener('touchstart', (event) => {
+    event.preventDefault(); // スクロールを防止
+    rotateTetromino();
+    draw();
+});
+
 
 // ゲームの初期化
 function init() {
