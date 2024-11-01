@@ -260,7 +260,7 @@ function init() {
 function gameLoop() {
     moveTetromino('down');
     draw();
-    setTimeout(gameLoop, 1000); // 1秒ごとに下に移動
+    setTimeout(gameLoop, 500); // 1秒ごとに下に移動
 }
 
 // ゲームを開始する

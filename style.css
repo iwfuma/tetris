@@ -29,29 +29,3 @@ button {
     font-size: 16px; /* ボタンのフォントサイズ */
     cursor: pointer; /* カーソルをポインターに変更 */
 }
-
-/* スマートフォンやタブレット用のスタイル */
-@media (max-width: 600px) {
-    canvas {
-        width: 100%; /* 横幅を100%に */
-        height: auto; /* 高さを自動調整 */
-    }
-
-    button {
-        font-size: 14px; /* ボタンのフォントサイズを小さく */
-        padding: 8px 15px; /* ボタンの内側のスペースを小さく */
-    }
-}
-
-/* デスクトップ用のスタイル */
-@media (min-width: 601px) {
-    canvas {
-        width: 300px; /* デフォルトの幅 */
-        height: 600px; /* デフォルトの高さ */
-    }
-
-    button {
-        font-size: 16px; /* ボタンのフォントサイズを通常 */
-        padding: 10px 20px; /* ボタンの内側のスペースを通常 */
-    }
-}
