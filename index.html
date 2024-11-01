@@ -8,7 +8,13 @@
 </head>
 <body>
     <div class="container">
-        <canvas id="tetris-canvas" width="300" height="450"></canvas>
+        <canvas id="tetris-canvas" width="300" height="600"></canvas> <!-- 大きなキャンバス -->
+        <div class="controls">
+            <button onclick="moveTetromino('left')">左</button>
+            <button onclick="moveTetromino('right')">右</button>
+            <button onclick="moveTetromino('down')">下</button>
+            <button onclick="rotateTetromino()">回転</button>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
