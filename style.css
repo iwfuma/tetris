@@ -5,6 +5,7 @@ body {
     height: 100vh; /* ビューポートの高さに合わせる */
     margin: 0; /* デフォルトのマージンをリセット */
     background-color: #f0f0f0; /* 背景色を設定 */
+    font-family: Arial, sans-serif;
 }
 
 .container {
@@ -15,17 +16,34 @@ body {
 }
 
 canvas {
-    border: 2px solid #333; /* キャンバスの枠線 */
+    border: 3px solid #555; /* キャンバスの枠線を少し濃く */
     background-color: #fff; /* キャンバスの背景色 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 影を追加して浮き上がる効果 */
 }
 
 .controls {
     margin-top: 20px; /* キャンバスとボタンの間にスペースを作る */
+    display: flex;
+    gap: 10px; /* ボタンの間隔を一定に */
+    flex-wrap: wrap; /* 小さい画面でも折り返し可能に */
+    justify-content: center; /* ボタンを中央揃え */
 }
 
 button {
-    margin: 5px; /* ボタンの間にスペースを作る */
     padding: 10px 20px; /* ボタンの内側にスペースを作る */
     font-size: 16px; /* ボタンのフォントサイズ */
     cursor: pointer; /* カーソルをポインターに変更 */
+    background-color: #4CAF50; /* ボタンの背景色 */
+    color: #fff; /* ボタンの文字色 */
+    border: none; /* ボタンの枠線を消す */
+    border-radius: 5px; /* ボタンの角を丸く */
+    transition: background-color 0.3s ease; /* ホバー時の背景色変化 */
+}
+
+button:hover {
+    background-color: #45a049; /* ボタンのホバー時の色 */
+}
+
+button:active {
+    background-color: #3e8e41; /* ボタンのクリック時の色 */
 }

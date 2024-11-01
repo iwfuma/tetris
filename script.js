@@ -3,7 +3,9 @@ const context = canvas.getContext('2d');
 
 const ROWS = 15; 
 const COLS = 10;
-const BLOCK_SIZE = 20;
+const BLOCK_SIZE = 30; // ブロックサイズを大きくする
+canvas.width = COLS * BLOCK_SIZE;
+canvas.height = ROWS * BLOCK_SIZE;
 
 // テトリスのフィールド
 let field = Array.from({ length: ROWS }, () => Array(COLS).fill(0));
@@ -66,8 +68,8 @@ function newTetromino() {
 
     if (!isValidMove(0, 0, currentTetromino.shape)) {
         alert('Game Over!');
-        field = Array.from({ length: ROWS }, () => Array(COLS).fill(0)); // フィールドをリセット
-        init(); // 新しいゲームを開始
+        field = Array.from({ length: ROWS }, () => Array(COLS).fill(0));
+        init();
     }
 }
 
@@ -109,9 +111,9 @@ function moveTetromino(direction) {
         currentPosition.x += offsetX;
         currentPosition.y += offsetY;
     } else if (direction === 'down') {
-        fixTetromino();
-        removeFullRows();
-        newTetromino();
+        fixTetromino(); // ブロックをフィールドに固定
+        removeFullRows(); // 行を削除
+        newTetromino(); // 新しいブロックを生成
     }
 }
 
