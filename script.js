@@ -143,7 +143,6 @@ function fixTetromino() {
     });
 }
 
-// 完全な行を削除する関数
 function removeFullRows() {
     let rowsToRemove = [];
 
@@ -158,9 +157,17 @@ function removeFullRows() {
         field.unshift(Array(COLS).fill(0));
     });
 
-    // スコアを増加
-    score += rowsToRemove.length;
+    // スコアを削除行数分だけ1増加
+    score += rowsToRemove.length; // 行ごとに1ポイント加算
+
+    // スコアを表示（もし表示が必要な場合）
+    const scoreElement = document.getElementById('score');
+    if (scoreElement) {
+        scoreElement.textContent = `Score: ${score}`;
+    }
 }
+
+
 
 // テトリスのブロックを回転する関数
 function rotateTetromino() {

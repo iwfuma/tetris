@@ -6,49 +6,70 @@
     <title>Tetris Game</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* タイマー表示のスタイル */
+        /* 全体の基本設定 */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden; /* 横スクロールを無効化 */
+        }
+
+        /* ゲーム画面 */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        /* タイマーの位置固定 */
         #timer {
             font-size: 24px;
             font-weight: bold;
             color: black;
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
+            margin-bottom: 10px;
         }
 
-        /* ゲームオーバーのメッセージのスタイル */
-        #game-over-message {
-            display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
+        /* 操作説明のスタイル */
+        aside {
+            width: 100%;
+            max-width: 500px; /* 横幅を制限 */
             padding: 20px;
-            font-size: 24px;
-            border-radius: 10px;
+            background-color: #f9f9f9;
+            border-top: 1px solid #ccc;
+            text-align: center;
+            box-sizing: border-box;
         }
 
-        /* 再スタートボタンのスタイル */
-        #restart-button {
-            display: none;
-            position: absolute;
-            top: 60%;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 10px 20px;
-            font-size: 18px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+        aside h2 {
+            margin-top: 0;
         }
 
-        #restart-button:hover {
-            background-color: #45a049;
+        aside ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        aside ul li {
+            margin: 5px 0;
+        }
+
+        /* キャンバスのサイズ固定 */
+        #tetris-canvas {
+            display: block;
+            background-color: whitesmoke;
+            border: 1px solid #ccc;
+        }
+
+        /* ゲームオーバーメッセージ */
+        #game-over-message {
+            font-size: 20px;
+            color: red;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -56,9 +77,21 @@
     <div class="container">
         <div id="timer">Time: 30</div>
         <canvas id="tetris-canvas" width="300" height="450"></canvas>
-        <div id="game-over-message">Game Over! Time is up!</div>
-        <button id="restart-button">Restart</button> <!-- 再スタートボタン -->
+        <div id="game-over-message" style="display: none;">
+            <!-- ゲームオーバーメッセージ -->
+        </div>
+        <div id="score">Score: 0</div>..........
     </div>
+    <aside>
+        <h2>操作説明</h2>
+        <ul>
+            <li><strong>←</strong>: 左に移動</li>
+            <li><strong>→</strong>: 右に移動</li>
+            <li><strong>↓</strong>: 下に移動</li>
+            <li><strong>↑</strong>: ブロックを回転</li>
+            <li><strong>Windows + R</strong>: 再スタート</li>
+        </ul>
+    </aside>
     <script src="script.js"></script>
 </body>
 </html>
