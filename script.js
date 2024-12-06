@@ -181,7 +181,7 @@ function rotateTetromino() {
 }
 
 // タイマー
-let timeLeft = 30;
+let timeLeft = 120;
 const timerElement = document.getElementById('timer');
 
 // タイマーを更新する関数
@@ -245,4 +245,4 @@ function gameLoop() {
 // ゲーム開始
 init();
 setInterval(updateTimer, 1000);
-setInterval(gameLoop, 500);//落下速度調整
+setInterval(gameLoop, 400);//落下速度調整
